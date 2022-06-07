@@ -2,7 +2,9 @@
     pageEncoding="UTF-8" session="true"%>
 
 <script type="text/javascript">
-$('#navigation').load('MenuController');
+	$('#navigation').load('MenuController');
+	$('#rcolumn').css("visibility", "hidden");
 </script>
+
 
 <p id="nav"> Logout done! </p>

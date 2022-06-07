@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" session="false"%>
+    
+<script type="text/javascript">
+	$('#rcolumn').css("visibility", "visible");
+</script>
 
 <div class="w3-bar">
 	<a class="w3-bar-item w3-button" href="MainController"> <i class="fa fa-home" aria-hidden="true"></i> </a> 

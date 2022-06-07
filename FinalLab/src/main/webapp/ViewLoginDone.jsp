@@ -3,6 +3,7 @@
 
 <script type="text/javascript">
 $('#navigation').load('MenuController');
+$('#rcolumn').css("visibility", "visible");
 </script>
 
 Log in for user ${sessionScope.user} done!

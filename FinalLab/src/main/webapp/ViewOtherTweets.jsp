@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<script type="text/javascript">
-
-$(document).ready(function(){
+ <script type="text/javascript">
+ $(document).ready(function(){
 	$('#navigation').load('MenuController');
 	$('#lcolumn').load('GetNotFollowedUsers');
 	$('#rcolumn').load('GetUserInfo');
-});
+ });
 </script>
 
 <c:forEach var="t" items="${tweets}">       
@@ -18,6 +17,5 @@ $(document).ready(function(){
    <p> ${t.content} </p>
    <button type="button" class="likeTweet w3-button w3-theme w3-margin-bottom"><i class="fa fa-thumbs-up"></i> &nbsp;Like</button>
    <button type="button" class="retweetTweet w3-button w3-theme w3-margin-bottom"><i class="fa fa-retweet"></i> &nbsp;Retweet</button>
-   <button type="button" class="delTweet w3-button w3-red w3-margin-bottom"><i class="fa fa-trash"></i> &nbsp;Delete</button> 
  </div>
 </c:forEach>

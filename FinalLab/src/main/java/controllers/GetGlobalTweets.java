@@ -46,7 +46,7 @@ public class GetGlobalTweets extends HttpServlet {
 		}
 
 		request.setAttribute("tweets",tweets);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/ViewTweets.jsp"); 
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/ViewOtherTweets.jsp"); 
 		dispatcher.forward(request,response);
 		
 	}

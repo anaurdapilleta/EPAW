@@ -58,6 +58,8 @@ public class LoginController extends HttpServlet {
 	    		
 	    		if (pair.getLeft()) {
 		    		System.out.println("login OK, forwarding to ViewOwnTimeline ");
+		    		user.setError(2,false);
+					user.setError(6,false);
 	    			HttpSession session = request.getSession();
 	    			session.setAttribute("user",pair.getRight());
 	    			view = "ViewOwnTimeline.jsp";
@@ -65,6 +67,11 @@ public class LoginController extends HttpServlet {
 	    		}
 	    		else {
 	    			System.out.println("user is not logged (user not found), forwarding to ViewLoginForm ");
+	    			if (!manager.checkUser(user.getUser())) {
+	 				   user.setError(2,true);
+	 			    }else {
+	 				   user.setError(6,true);
+	 			    }
 	    			request.setAttribute("error", true);
 					request.setAttribute("user",user);
 				}
@@ -73,6 +80,7 @@ public class LoginController extends HttpServlet {
 	    	else {
 			    System.out.println("user is not logged (first time), forwarding to ViewLoginForm ");
 				request.setAttribute("user",user);
+				
 	    	}
 	    	
 	    	RequestDispatcher dispatcher = request.getRequestDispatcher(view);
