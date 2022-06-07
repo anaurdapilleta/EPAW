@@ -91,63 +91,6 @@ public class ManageTweets {
 		} 
 		return  l;
 	}
-	
-	/* Get followed tweets from a user given start and end*/
-	public List<Tweet> getFollowedTweets(Integer uid,Integer start, Integer end) {
-		 String query = "SELECT tweets.id,tweets.uid,tweets.postDate,tweets.content,tweets.author FROM tweets INNER JOIN follows ON tweets.uid = follows.followed where follows.follower = ? ORDER BY tweets.postDate DESC LIMIT ?,? ;";
-		 PreparedStatement statement = null;
-		 List<Tweet> l = new ArrayList<Tweet>();
-		 try {
-			 statement = db.prepareStatement(query);
-			 statement.setInt(1,uid);
-			 statement.setInt(2,start);
-			 statement.setInt(3,end);
-			 ResultSet rs = statement.executeQuery();
-			 while (rs.next()) {
-				 Tweet tweet = new Tweet();
-       		     tweet.setId(rs.getInt("id"));
-				 tweet.setUid(rs.getInt("uid"));
-				 tweet.setPostDateTime(rs.getTimestamp("postDate"));
-				 tweet.setContent(rs.getString("content"));
-				 tweet.setUname(rs.getString("author"));
-				 l.add(tweet);
-			 }
-			 rs.close();
-			 statement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} 
-		return  l;
-	}
-	
-	/* Get global tweets */
-	public List<Tweet> getGlobalTweets(Integer start, Integer end) {
-		 String query = "SELECT tweets.id,tweets.uid,tweets.postDate,tweets.content,tweets.author FROM tweets ORDER BY tweets.postDate DESC LIMIT ?,? ;";
-		 PreparedStatement statement = null;
-		 List<Tweet> l = new ArrayList<Tweet>();
-		 try {
-			 statement = db.prepareStatement(query);
-			 statement.setInt(1,start);
-			 statement.setInt(2,end);
-			 ResultSet rs = statement.executeQuery();
-			 while (rs.next()) {
-				 Tweet tweet = new Tweet();
-       		     tweet.setId(rs.getInt("id"));
-				 tweet.setUid(rs.getInt("uid"));
-				 tweet.setPostDateTime(rs.getTimestamp("postDate"));
-				 tweet.setContent(rs.getString("content"));
-				 tweet.setUname(rs.getString("author"));
-				 l.add(tweet);
-			 }
-			 rs.close();
-			 statement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} 
-		return  l;
-	}
-	
-	
 	/* Like tweet */
 	public void likeTweet(Integer id,Integer uid) {
 		String query = "INSERT INTO likes (usrId,tweetId) VALUES (?,?)";

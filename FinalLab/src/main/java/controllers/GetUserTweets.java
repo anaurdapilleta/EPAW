@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,8 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.commons.beanutils.BeanUtils;
 
 import managers.ManageTweets;
 import models.Tweet;
@@ -41,22 +38,11 @@ public class GetUserTweets extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		List<Tweet> tweets = Collections.emptyList();
 		User user = (User) session.getAttribute("user");
-		User other = new User();
 		
 		if (session != null || user != null) {
-			try {
-				BeanUtils.populate(other, request.getParameterMap());
-				ManageTweets tweetManager = new ManageTweets();
-				tweets = tweetManager.getUserTweets(other.getId(),0,4);
-				tweetManager.finalize();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+			ManageTweets tweetManager = new ManageTweets();
+			tweets = tweetManager.getUserTweets(user.getId(),0,4);
+			tweetManager.finalize();
 		}
 
 		request.setAttribute("tweets",tweets);

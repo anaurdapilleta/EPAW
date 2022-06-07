@@ -6,7 +6,7 @@
 	$('#navigation').load('MenuController');
 	$('#lcolumn').load('GetNotFollowedUsers');
 	$('#rcolumn').load('GetUserInfo');
-	$('#iterator').load('GetUserTweets', { id: ${user.id} });
+	$('#iterator').load('GetUserTweets');
  });
 </script>
 

@@ -64,7 +64,6 @@ $(document).ready(function(){
 		$.post( "GetUserInfo", { id: $(this).parent().attr("id") }, function(event) {
 			$("#content").load("GetUserInfo");
 			$("#lcolumn").load("GetNotFollowedUsers");
-			$("#rcolumn").load("GetOtherUserInfo", { id: $(this).parent().attr("id") });
 		});
 		event.preventDefault();
 	});
@@ -72,9 +71,8 @@ $(document).ready(function(){
 	/* Info other user */
 	$(document).on("click",".otherUserInfo",function(event) {
 		var other = $(this).parent();
-		$("#content").load("GetUserTweets", { id: $(this).parent().attr("id") });
+		$("#content").load("GetOtherUserInfo", { id: $(this).parent().attr("id") });
 		$("#lcolumn").load("GetNotFollowedUsers");
-		$("#rcolumn").load("GetOtherUserInfo", { id: $(this).parent().attr("id") });
 		
 		event.preventDefault();
 	});
