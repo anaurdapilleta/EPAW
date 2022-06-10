@@ -72,10 +72,16 @@ $(document).ready(function(){
 	/* Info other user */
 	$(document).on("click",".otherUserInfo",function(event) {
 		var other = $(this).parent();
-		$("#content").load("GetUserTweets", { id: $(this).parent().attr("id") });
+		$("#content").load("GetOtherUserTweets", { id: $(this).parent().attr("id") });
 		$("#lcolumn").load("GetNotFollowedUsers");
 		$("#rcolumn").load("GetOtherUserInfo", { id: $(this).parent().attr("id") });
 		
+		event.preventDefault();
+	});
+	//Edit profile
+	$(document).on("click",".editUser",function(event) {
+		var user = $(this).parent();
+		$("#content").load("GetEditProfile");
 		event.preventDefault();
 	});
 	//Like tweet
@@ -92,6 +98,7 @@ $(document).ready(function(){
 		});
 		event.preventDefault();
 	});
+	
 	
 	
 });

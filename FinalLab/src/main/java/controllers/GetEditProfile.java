@@ -1,6 +1,7 @@
-    package controllers;
+package controllers;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,17 +11,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanUtils;
+
+import managers.ManageUsers;
+import models.User;
+
 /**
- * Servlet implementation class MainController
+ * Servlet implementation class FormController
  */
-@WebServlet("/MainController")
-public class MainController extends HttpServlet {
+@WebServlet("/GetEditProfile")
+public class GetEditProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MainController() {
+    public GetEditProfile() {
         super();
     }
 
@@ -28,29 +34,30 @@ public class MainController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	   HttpSession session = request.getSession(false);
+	   User user = (User) session.getAttribute("user");
 		
-		HttpSession session = request.getSession(false);
-		
-		if (session==null || session.getAttribute("user")==null) {
-			System.out.println("MainController: NO active session has been found,");
-			request.setAttribute("menu","ViewMenuNotLogged.jsp");
-			request.setAttribute("content","ViewRegisterForm.jsp");
-		}
-		else {
-			System.out.println("Main Controller: active session has been found,");
-			request.setAttribute("menu","ViewMenuLogged.jsp");
-			request.setAttribute("content","ViewOwnTimeline.jsp");
+	   if (session != null || user != null) {
+			ManageUsers userManager = new ManageUsers();
+			user = userManager.getUser(user.getId());
+			userManager.finalize();
 		}
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-		dispatcher.forward(request, response);	}
+		request.setAttribute("user",user);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/ViewEditProfile.jsp"); 
+		dispatcher.include(request,response);
+	
+		   
+		
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
 }
-

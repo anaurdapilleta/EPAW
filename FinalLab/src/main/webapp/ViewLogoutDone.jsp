@@ -4,6 +4,7 @@
 <script type="text/javascript">
 	$('#navigation').load('MenuController');
 	$('#rcolumn').css("visibility", "hidden");
+	$('#lcolumn').css("visibility", "hidden");
 </script>
 
 

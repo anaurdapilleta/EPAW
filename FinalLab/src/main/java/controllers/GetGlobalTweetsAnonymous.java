@@ -1,6 +1,8 @@
-    package controllers;
+package controllers;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,17 +12,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import managers.ManageTweets;
+import models.Tweet;
+import models.User;
+
 /**
- * Servlet implementation class MainController
+ * Servlet implementation class dTcontroller
  */
-@WebServlet("/MainController")
-public class MainController extends HttpServlet {
+@WebServlet("/GetGlobalTweetsAnonymous")
+public class GetGlobalTweetsAnonymous extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MainController() {
+    public GetGlobalTweetsAnonymous() {
         super();
     }
 
@@ -30,20 +36,18 @@ public class MainController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession(false);
+		List<Tweet> tweets = Collections.emptyList();
 		
-		if (session==null || session.getAttribute("user")==null) {
-			System.out.println("MainController: NO active session has been found,");
-			request.setAttribute("menu","ViewMenuNotLogged.jsp");
-			request.setAttribute("content","ViewRegisterForm.jsp");
-		}
-		else {
-			System.out.println("Main Controller: active session has been found,");
-			request.setAttribute("menu","ViewMenuLogged.jsp");
-			request.setAttribute("content","ViewOwnTimeline.jsp");
-		}
+		ManageTweets tweetManager = new ManageTweets();
+		tweets = tweetManager.getGlobalTweets(0,4);
+		tweetManager.finalize();
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-		dispatcher.forward(request, response);	}
+
+		request.setAttribute("tweets",tweets);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/ViewOtherTweetsAnonymous.jsp"); 
+		dispatcher.forward(request,response);
+		
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
